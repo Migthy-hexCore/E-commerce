@@ -29,19 +29,35 @@
     'overflow-y-hidden': sidebarOpen
 }">
     <div class="fixed inset-0 bg-gray-900 bg-opacity-50 z-20 sm:hidden" style="display: none;" x-show="sidebarOpen"
-            x-on:click="sidebarOpen = false"></div>
+        x-on:click="sidebarOpen = false"></div>
     @include('layouts.partials.admin.navigation')
     @include('layouts.partials.admin.sidebar')
 
     <div class="p-4 sm:ml-64">
         <div class="mt-14">
-            @include('layouts.partials.admin.breadcrumb')
+            <div class="flex justify-between items-center">
+                @include('layouts.partials.admin.breadcrumb')
+                @isset($action)
+                    <div>
+                        {{ $action }}
+                    </div>
+                @endisset
+            </div>
             <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
                 {{ $slot }}
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @livewireScripts
+    @stack('js')
+
+    @if (@session('swal'))
+        <script>
+            Swal.fire({!! json_encode(session('swal')) !!});
+        </script>
+    @endif
+
 </body>
 
 </html>
