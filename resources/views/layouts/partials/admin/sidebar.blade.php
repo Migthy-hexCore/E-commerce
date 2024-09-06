@@ -26,7 +26,15 @@
             'icon' => 'fa-solid fa-tag',
             'route' => route('admin.subcategories.index'),
             'active' => request()->routeIs('admin.subcategories.*'),
-        ]
+        ],
+        [
+            //Productos
+            'name' => 'Productos',
+            'icon' => 'fa-solid fa-cube',
+            'route' => route('admin.products.index'),
+            'active' => request()->routeIs('admin.products.*'),
+
+        ],
     ];
 @endphp
 
