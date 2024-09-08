@@ -15,10 +15,10 @@ class Option extends Model
         'type',
     ];
 
-    //relacion uno a muchos
+    //relacion muchos a muchos
     public function products()
     {
-        return $this->hasMany(Product::class)
+        return $this->belongsToMany(Product::class)
             ->withPivot('value')
             ->withTimestamps();
     }

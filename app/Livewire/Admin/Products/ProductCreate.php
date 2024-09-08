@@ -79,8 +79,22 @@ class ProductCreate extends Component
             'product.description' => 'nullable',
             'product.price' => 'required|numeric|min:1',
             'product.subcategory_id' => 'required|exists:subcategories,id',
-        ]);
-
+        ],
+        [
+            'image.required' => 'La imagen es obligatoria.',
+            'image.image' => 'El archivo debe ser una imagen.',
+            'image.max' => 'La imagen no debe pesar más de 1MB.',
+            'product.sku.required' => 'El SKU es obligatorio.',
+            'product.sku.unique' => 'El SKU ya está en uso.',
+            'product.name.required' => 'El nombre es obligatorio.',
+            'product.name.max' => 'El nombre no debe superar los 255 caracteres.',
+            'product.price.required' => 'El precio es obligatorio.',
+            'product.price.numeric' => 'El precio debe ser un número.',
+            'product.price.min' => 'El precio debe ser mayor a 0.',
+            'product.subcategory_id.required' => 'La subcategoría es obligatoria.',
+            'product.subcategory_id.exists' => 'La subcategoría seleccionada no es válida.',
+        ]
+    );
 
 
         $this->product['image_path'] = $this->image->store('products');

@@ -33,7 +33,12 @@ class FamilyController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-        ]);
+        ],
+        [
+            'name.required' => 'El nombre es obligatorio',
+            'name.max' => 'El nombre no puede tener más de 255 caracteres',
+        ]
+    );
 
         Family::create($request->all());
 

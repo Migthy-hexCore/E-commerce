@@ -25,6 +25,7 @@
                     placeholder="Ingrese el nombre de la familia">
                 </x-input>
             </div>
+            
             <div class="flex justify-end space-x-2">
                 <x-danger-button onclick="confirmDelete()">
                     Eliminar

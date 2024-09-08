@@ -11,7 +11,7 @@ class Features extends Model
 
     //asignacion masiva
     protected $fillable = [
-        'name',
+        'value',
         'description',
         'option_id',
     ];
