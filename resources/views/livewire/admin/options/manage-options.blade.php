@@ -108,7 +108,7 @@
                     <div class="p-6 rounded-lg border border-gray-200 relative" wire:key="features-{{ $index }}">
                         <div class="absolute -top-3 px-4 bg-slate-800">
                             <button wire:click="removeFeature({{ $index }})">
-                                <i class="fa-solid fa-trash-can text-red-500 hover:text-red-600"></i>
+                                <i class="fa-solid fa-trash-can text-red-400 hover:text-red-600"></i>
                             </button>
                         </div>
                         <div class="grid grid-cols-2 gap-6">
