@@ -5,25 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subcategory extends Model
+class Feature extends Model
 {
     use HasFactory;
 
     //asignacion masiva
     protected $fillable = [
-        'name',
-        'category_id'
+        'value',
+        'description',
+        'option_id',
     ];
 
     //relacion uno a muchos inversa
-    public function category()
+    public function option()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Option::class);
     }
 
     //relacion uno a muchos
-    public function products()
+    public function variants()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsToMany(Variant::class)
+            ->withTimestamps();
     }
 }

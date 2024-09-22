@@ -103,6 +103,18 @@
                 </x-input>
             </div>
 
+            {{-- Stock --}}
+            @empty($product->variants->count()>0)
+                <div class="mb-4">
+                    <x-label class="mb-1">
+                        Stock
+                    </x-label>
+                    <x-input class="w-full" type="number" placeholder="Ingresa el stock del producto"
+                        wire:model="productEdit.stock">
+                    </x-input>
+                </div>
+            @endempty
+
             {{-- Boton actualizar --}}
             <div class="flex justify-end space-x-2">
                 <x-danger-button onclick="confirmDelete()">

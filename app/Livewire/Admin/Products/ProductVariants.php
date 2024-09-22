@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Admin\Products;
 
-use App\Models\Features;
+use App\Models\Feature;
 use App\Models\Option;
+use App\Models\Variant;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -42,7 +43,7 @@ class ProductVariants extends Component
     #[Computed()]
     public function features()
     {
-        return Features::where('option_id', $this->variant['option_id'])->get();
+        return Feature::where('option_id', $this->variant['option_id'])->get();
     }
 
     public function addFeature()
@@ -56,7 +57,7 @@ class ProductVariants extends Component
 
     public function feature_change($index)
     {
-        $feature = Features::find($this->variant['features'][$index]['id']);
+        $feature = Feature::find($this->variant['features'][$index]['id']);
 
         if ($feature) {
             $this->variant['features'][$index]['value'] = $feature->value;
@@ -78,6 +79,7 @@ class ProductVariants extends Component
                 return $feature['id'] != $feature_id;
             }),
         ]);
+        $this->generarVariantes();
         $this->product = $this->product->fresh();
     }
 
@@ -85,6 +87,7 @@ class ProductVariants extends Component
     {
         $this->product->options()->detach($option_id);
         $this->product = $this->product->fresh();
+        $this->generarVariantes();
     }
 
     public function save()
@@ -100,9 +103,7 @@ class ProductVariants extends Component
                 'variant.features.*.value.required' => 'El campo valor es requerido',
                 'variant.features.*.description.required' => 'El campo descripción es requerido',
             ]
-
         );
-
 
         $this->product->options()->attach(
             $this->variant['option_id'],
@@ -112,8 +113,36 @@ class ProductVariants extends Component
         );
 
         $this->product = $this->product->fresh();
-
+        $this->generarVariantes();
         $this->reset('variant', 'openModal');
+    }
+
+    public function generarVariantes()
+    {
+        $features = $this->product->options->pluck('pivot.features');
+        $combinaciones = $this->generarCombinaciones($features);
+        $this->product->variants()->delete();
+        foreach ($combinaciones as $combinacion) {
+            $variant = Variant::create([
+                'product_id' => $this->product->id,
+            ]);
+            $variant->features()->attach($combinacion);
+        }
+        $this->dispatch('variant-genereate');
+    }
+
+    function  generarCombinaciones($arrays, $indice = 0, $combinacion = [])
+    {
+        if ($indice == count($arrays)) {
+            return [$combinacion];
+        }
+        $resultado = [];
+        foreach ($arrays[$indice] as $item) {
+            $combinacionesTemporal = $combinacion;
+            $combinacionesTemporal[] = $item['id'];
+            $resultado = array_merge($resultado, $this->generarCombinaciones($arrays, $indice + 1, $combinacionesTemporal));
+        }
+        return  $resultado;
     }
 
     public function render()

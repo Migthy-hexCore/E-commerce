@@ -8,6 +8,7 @@ use App\Models\Subcategory;
 use DragonCode\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
@@ -24,7 +25,7 @@ class ProductEdit extends Component
 
     public function mount($product)
     {
-        $this->productEdit = $product->only('sku', 'name', 'description', 'image_path', 'price', 'subcategory_id');
+        $this->productEdit = $product->only('sku', 'name', 'description', 'image_path', 'stock', 'price', 'subcategory_id');
         $this->families = Family::all();
         $this->category_id = $product->subcategory->category->id;
         $this->family_id = $product->subcategory->category->family_id;
@@ -54,6 +55,11 @@ class ProductEdit extends Component
         $this->productEdit['subcategory_id'] = '';
     }
 
+    #[On('variant-genereate')]
+    public function updateProdcut(){
+        $this->product = $this->product->fresh();
+    }
+
     #[Computed()]
     public function categories()
     {
@@ -74,6 +80,7 @@ class ProductEdit extends Component
             'productEdit.name' => 'required|max:255',
             'productEdit.description' => 'nullable',
             'productEdit.price' => 'required|numeric|min:1',
+            'productEdit.stock' => 'required|integer|min:0',
             'productEdit.subcategory_id' => 'required|exists:subcategories,id',
         ]);
 
@@ -83,12 +90,13 @@ class ProductEdit extends Component
         }
 
         $this->product->update($this->productEdit);
-        session()->flash('message', [
-            'icon' => 'success',
+
+        $this->dispatch('swal', [
             'title' => 'Producto actualizado',
-            'message' => 'El producto ha sido actualizado correctamente.',
+            'icon' => 'success',
+            'text' => 'El producto ha sido actualizado correctamente.'
         ]);
-        return redirect()->route('admin.products.edit', $this->product);
+        // return redirect()->route('admin.products.edit', $this->product);
     }
 
     public function render()

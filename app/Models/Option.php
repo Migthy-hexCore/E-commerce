@@ -27,6 +27,6 @@ class Option extends Model
     //relacion uno a muchos
     public function features()
     {
-        return $this->hasMany(Features::class);
+        return $this->hasMany(Feature::class);
     }
 }

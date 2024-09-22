@@ -15,7 +15,7 @@ class Category extends Model
         'family_id'
     ];
 
-    //relacion uno a muchos
+    //relacion uno a muchos inversa
     public function family(){
         return $this->belongsTo(Family::class);
     }

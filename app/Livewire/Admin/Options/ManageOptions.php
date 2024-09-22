@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Options;
 
 use App\Livewire\Forms\Admin\Options\NewOptionForm;
-use App\Models\Features;
+use App\Models\Feature;
 use App\Models\Option;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -28,7 +28,7 @@ class ManageOptions extends Component
         $this->newOption->addFeature();
     }
 
-    public function deleteFeature(Features $feature)
+    public function deleteFeature(Feature $feature)
     {
         $feature->delete();
         $this->options = Option::with('features')->get();
