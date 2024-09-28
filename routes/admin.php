@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\FamilyController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubcategoryController;
+use App\Http\Controllers\Api\SortController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,3 +29,5 @@ Route::put('products/{product}/variants/{variant}', [ProductController::class, '
     ->scopeBindings();
 
 Route::resource('covers', CoverController::class);
+
+
