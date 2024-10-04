@@ -8,16 +8,17 @@
                             <button
                                 class="px-4 py-2 bg-gray-600 w-full text-left text-white flex justify-between items-center"
                                 x-on:click="open = !open">
-                                {{ $option->name }}
+                                {{ $option['name'] }}
                                 <i class="fa-solid fa-angle-down"
                                     x-bind:class="{ 'fa-angle-down': open, 'fa-angle-up': !open }"></i>
                             </button>
                             <ul class="mt-2 space-y-2" x-show="open">
-                                @foreach ($option->features as $feature)
+                                @foreach ($option['features'] as $feature)
                                     <li>
-                                        <label class="inline-flex items-center">
-                                            <x-checkbox class="mr-2" />
-                                            {{ $feature->description }}
+                                        <label class="inline-flex items-center select-none">
+                                            <x-checkbox class="mr-2" value="{{ $feature['id'] }}"
+                                                wire:model.live="selected_features" />
+                                            {{ $feature['description'] }}
                                         </label>
                                     </li>
                                 @endforeach
@@ -28,13 +29,12 @@
             </aside>
         @endif
 
-
         <div class="md:flex-1">
             <div class="flex items-center">
                 <span class="mr-2">
                     Ordenar por:
                 </span>
-                <x-select>
+                <x-select wire:model.live="orderBy">
                     <option value="1">Relevancia</option>
                     <option value="2">Precio (mayor a menor)</option>
                     <option value="3">Precio (menor amayor)</option>
