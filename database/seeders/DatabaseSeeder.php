@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('products');
         Storage::makeDirectory('products');
 
-        // User::factory(10)->create();
+        User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'Cesar Alejandro Jaramillo Ramirez',
@@ -32,6 +32,6 @@ class DatabaseSeeder extends Seeder
             OptionSeeder::class,
         ]);
 
-        Product::factory(150)->create();
+        Product::factory(100)->create();
     }
 }

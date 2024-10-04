@@ -3,7 +3,7 @@
 
 }">
 
-    <header class="bg-indigo-400">
+    <header class="bg-gray-800">
         <x-container class="px-4 py-4">
             <div class="flex justify-between items-center space-x-8">
 
@@ -100,7 +100,8 @@
     </header>
 
     <div x-show="open" x-on:click="open = false" style="display: none"
-        class="fixed top-0 left-0 inset-0 bg-black bg-opacity-25 z-10"></div>
+        class="fixed top-0 left-0 inset-0 bg-black bg-opacity-25 z-10">
+    </div>
 
     <div x-show="open" style="display: none" class="fixed top-0 left-0 z-20">
         <div class="flex">
@@ -121,7 +122,7 @@
                     <ul>
                         @foreach ($families as $family)
                             <li wire:mouseover="$set('family_id', {{ $family->id }})">
-                                <a href=""
+                                <a href="{{ route('families.show', $family) }}"
                                     class="flex items-center justify-between px-4 py-4 text-gray-700 hover:bg-indigo-800 hover:text-white">
                                     {{ $family->name }}
                                     <i class="fa-solid fa-angle-right"></i>
@@ -140,7 +141,7 @@
                         <p class="border-b-[3px] border-cyan-600 uppercase text-xl font-semibold pb-1">
                             {{ $this->familyName }}
                         </p>
-                        <a href="" class="btn btn-indigo">Ver más</a>
+                        <a href="{{ route('families.show', $family_id) }}" class="btn btn-indigo">Ver todo</a>
                     </div>
 
                     <ul class="grid grid-cols-1 xl:grid-cols-3 gap-8">

@@ -34,5 +34,4 @@ class Cover extends Model
             get: fn() => Storage::url($this->image_path),
         );
     }
-
 }
