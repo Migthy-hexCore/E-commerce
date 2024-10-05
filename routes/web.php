@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Feature;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::get('families/{family}', [FamilyController::class, 'show'])->name('families.show');
+
+Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::middleware([
     'auth:sanctum',
