@@ -2,12 +2,9 @@
     <div class="card">
         <div class="grid md:grid-cols-2 gap-6">
             <div class="col-span-1">
-                <figure class="mb-2">
-                    <img src="{{ $product->image }}" class="aspect-[16/9] object-cover object-center">
+                <figure>
+                    <img src="{{ $product->image }}" class="aspect-[1/1] object-cover object-center">
                 </figure>
-                <div class="text-sm text-gray-300">
-                    {{ $product->description }}
-                </div>
             </div>
 
             <div class="col-span-1">
@@ -53,6 +50,10 @@
                 <button class="btn btn-blue w-full mb-6" wire:click="add_to_cart" wire:loading.attr="disabled">
                     Agregar al carrito
                 </button>
+
+                <div class="text-sm text-gray-300 mb-4">
+                    {{ $product->description }}
+                </div>
 
                 <div class="text-gray-400 flex items-center space-x-4">
                     <i class="fa-solid fa-truck-fast text-2xl"></i>
