@@ -12,7 +12,7 @@
                 </button>
 
                 <h1 class="text-white">
-                    <a href="" class="inline-flex flex-col items-end">
+                    <a href="/" class="inline-flex flex-col items-end">
                         <span class="text-xl md:text-2xl leading-4 md:leading-6 font-semibold">
                             Barberia Ray
                         </span>
