@@ -8,6 +8,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Models\Feature;
 use App\Models\Product;
 use App\Models\Variant;
+use CodersFree\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
@@ -16,6 +17,10 @@ Route::get('categories/{category}', [CategoryController::class, 'show'])->name('
 Route::get('subcategories/{subcategory}', [SubcategoryController::class, 'show'])->name('subcategories.show');
 
 Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::get('prueba', function () {
+    Cart::instance('shopping');
+    return Cart::content();
+});
 
 Route::middleware([
     'auth:sanctum',
