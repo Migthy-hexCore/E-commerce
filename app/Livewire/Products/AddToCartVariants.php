@@ -6,6 +6,7 @@ use App\Models\Feature;
 use CodersFree\Shoppingcart\Facades\Cart;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class AddToCartVariants extends Component
 {
@@ -44,6 +45,10 @@ class AddToCartVariants extends Component
                 'features' => Feature::whereIn('id', $this->selectedFeatures)->pluck('description', 'id')->toArray(),
             ]
         ]);
+
+        if (Auth::check()) {
+            Cart::store(Auth::id());
+        }
 
         $this->dispatch('swal', [
             'title' => 'Producto agregado al carrito',

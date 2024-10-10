@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Products;
 
+use Illuminate\Support\Facades\Auth;
 use CodersFree\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 
@@ -25,6 +26,10 @@ class AddToCart extends Component
                 'features' => [],
             ]
         ]);
+
+        if (Auth::check()) {
+            Cart::store(Auth::id());
+        }
 
         $this->dispatch('swal', [
             'title' => 'Producto agregado al carrito',
