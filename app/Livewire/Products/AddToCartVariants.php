@@ -50,12 +50,14 @@ class AddToCartVariants extends Component
             Cart::store(Auth::id());
         }
 
+        $this->dispatch('cartUpdated', Cart::count());
+
         $this->dispatch('swal', [
             'title' => 'Producto agregado al carrito',
             'icon' => 'success',
             'timeout' => 3000,
             'toast' => true,
-            'position' => 'top-right'
+            'position' => 'center'
         ]);
     }
 

@@ -31,12 +31,15 @@ class AddToCart extends Component
             Cart::store(Auth::id());
         }
 
+        $this->dispatch('cartUpdated', Cart::count());
+
+
         $this->dispatch('swal', [
             'title' => 'Producto agregado al carrito',
             'icon' => 'success',
             'timeout' => 3000,
             'toast' => true,
-            'position' => 'top-right'
+            'position' => 'center' // top-right, top-left, top-center, top-end, center, center-left, center-right, bottom, bottom-left, bottom-right, bottom-center
         ]);
     }
 
