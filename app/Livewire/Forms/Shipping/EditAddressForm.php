@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Livewire\Forms;
+namespace App\Livewire\Forms\Shipping;
 
 use App\Enums\TypeOfDocuments;
 use App\Models\Address;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Enum;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class CreateAddressForm extends Form
+class EditAddressForm extends Form
 {
+    public $id = '';
     public $type = '';
     public $description = '';
     public $region = '';
     public $reference = '';
     public $receiver = 1; // 1 = El usuario que solicito el envio recibira el paquete, 2 = Otra persona recibira el paquete
     public $receiver_info = [];
-    public $default = false; // Si es la direccion por defecto del usuario 
+    public $default = false; // Si es la direccion por defecto del usuario
 
     public function rules()
     {
@@ -34,7 +34,6 @@ class CreateAddressForm extends Form
             ],
             'receiver_info.document_number' => 'required|string',
             'receiver_info.phone' => 'required|string',
-            // 'default' => 'required|boolean',
         ];
     }
 
@@ -54,15 +53,24 @@ class CreateAddressForm extends Form
         ];
     }
 
-    public function save()
+    public function edit($address)
+    {
+        $this->id = $address->id;
+        $this->type = $address->type;
+        $this->description = $address->description;
+        $this->region = $address->region;
+        $this->reference = $address->reference;
+        $this->receiver = $address->receiver;
+        $this->receiver_info = $address->receiver_info;
+        $this->default = $address->default;
+    }
+
+    public function update()
     {
         $this->validate();
 
-        if (Auth::user()->addresses->count() === 0) {
-            $this->default = true;
-        }
-
-        Address::create([
+        $address = Address::find($this->id);
+        $address->update([
             'type' => $this->type,
             'description' => $this->description,
             'region' => $this->region,
@@ -70,15 +78,8 @@ class CreateAddressForm extends Form
             'receiver' => $this->receiver,
             'receiver_info' => $this->receiver_info,
             'default' => $this->default,
-            'user_id' => Auth::id(),
         ]);
+
         $this->reset();
-        $this->receiver_info = [
-            'name' => Auth::user()->name,
-            'last_name' => Auth::user()->last_name,
-            'document_type' => Auth::user()->document_type,
-            'document_number' => Auth::user()->document_number,
-            'phone' => Auth::user()->phone,
-        ];
     }
 }

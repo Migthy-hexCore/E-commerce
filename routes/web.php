@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingController;
@@ -19,13 +20,9 @@ Route::get('categories/{category}', [CategoryController::class, 'show'])->name('
 Route::get('subcategories/{subcategory}', [SubcategoryController::class, 'show'])->name('subcategories.show');
 Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-
 Route::get('shipping', [ShippingController::class, 'index'])->name('shipping.index');
+Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 
-Route::get('prueba', function () {
-    Cart::instance('shopping');
-    return Cart::content();
-});
 
 Route::middleware([
     'auth:sanctum',
@@ -36,3 +33,9 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+/* Route::get('prueba', function () {
+    Cart::instance('shopping');
+    return Cart::content();
+}); */

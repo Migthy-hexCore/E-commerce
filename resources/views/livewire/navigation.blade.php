@@ -1,6 +1,5 @@
 <div x-data="{
     open: false,
-
 }">
 
     <header class="bg-gray-800">

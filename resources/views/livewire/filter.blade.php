@@ -50,7 +50,7 @@
                                 {{ $product->name }}
                             </h1>
                             <p class="text-gray-600 mb-4">
-                                MXN ${{ $product->price }}
+                                {{ $product->price }} MXN $
                             </p>
                             <a href="{{ route('products.show', $product) }}"
                                 class="btn btn-indigo block w-full text-center">
