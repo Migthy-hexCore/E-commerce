@@ -2,6 +2,14 @@
     @apply font-bold py-2 px-4 rounded disabled:bg-opacity-30 hover:disabled:bg-opacity-30;
 }
 
+.btn-outline-gray {
+    @apply bg-transparent hover:bg-gray-700 text-gray-900 hover:text-white border border-gray-700 hover:border-transparent;
+}
+
+.btn-outline-red {
+    @apply bg-transparent hover:bg-red-700 text-white hover:text-white border border-red-700 hover:border-transparent;
+}
+
 .btn-blue {
     @apply bg-blue-500 text-white hover:bg-blue-700;
 }
@@ -36,8 +44,4 @@
 
 .btn-teal {
     @apply bg-teal-500 text-white hover:bg-teal-700;
-}
-
-.btn-indigo {
-    @apply bg-indigo-500 text-white hover:bg-indigo-700;
 }

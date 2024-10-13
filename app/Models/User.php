@@ -25,7 +25,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
+        'document_type',
+        'document_number',
         'email',
+        'phone',
         'password',
     ];
 
@@ -49,6 +53,11 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 
     /**
      * Get the attributes that should be cast.

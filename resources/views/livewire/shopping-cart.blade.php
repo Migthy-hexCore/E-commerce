@@ -72,7 +72,8 @@
                         {{ Cart::subtotal() }} $MXN
                     </p>
                 </div>
-                <a href="" class="btn btn-indigo block w-full text-center">Continuar compra</a>
+                <a href="{{ route('shipping.index') }}" class="btn btn-indigo block w-full text-center">Continuar
+                    compra</a>
             </div>
         </div>
     </div>
