@@ -9,6 +9,7 @@ use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Feature;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Variant;
 use CodersFree\Shoppingcart\Facades\Cart;
@@ -22,6 +23,10 @@ Route::get('products/{product}', [ProductController::class, 'show'])->name('prod
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('shipping', [ShippingController::class, 'index'])->name('shipping.index');
 Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('checkout/paid', [CheckoutController::class, 'paid'])->name('checkout.paid');
+Route::get('gracias', function () {
+    return view('gracias');
+})->name('gracias');
 
 
 Route::middleware([
@@ -35,7 +40,7 @@ Route::middleware([
 });
 
 
-/* Route::get('prueba', function () {
-    Cart::instance('shopping');
-    return Cart::content();
-}); */
+Route::get('prueba', function () {
+    $order = Order::first();
+    return $order;
+});
