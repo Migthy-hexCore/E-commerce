@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
@@ -12,6 +13,7 @@ use App\Models\Feature;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Variant;
+use Barryvdh\DomPDF\Facade\Pdf;
 use CodersFree\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +26,8 @@ Route::get('cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('shipping', [ShippingController::class, 'index'])->name('shipping.index');
 Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('checkout/paid', [CheckoutController::class, 'paid'])->name('checkout.paid');
+
+
 Route::get('gracias', function () {
     return view('gracias');
 })->name('gracias');
@@ -39,8 +43,14 @@ Route::middleware([
     })->name('dashboard');
 });
 
-
 Route::get('prueba', function () {
     $order = Order::first();
-    return $order;
-});
+    $pdf = Pdf::loadView('orders.ticket', compact('order'))->setPaper('a5');
+    $pdf->save(storage_path('app/public/tickets/ticket-' . $order->id . '.pdf'));
+
+    $order->pdf_path = 'tickets/ticket-' . $order->id . '.pdf';
+    $order->save();
+
+    return "Ticket generado";
+    return view('orders.ticket', compact('order'));
+}); 
