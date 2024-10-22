@@ -21,4 +21,10 @@ class Driver extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // relación uno a muchos
+    public function shipments()
+    {
+        return $this->hasMany(Shipment::class);
+    }
 }

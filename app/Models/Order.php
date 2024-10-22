@@ -24,4 +24,10 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    //uno a muchos 
+    public function shipments()
+    {
+        return $this->hasMany(Shipment::class);
+    }
 }

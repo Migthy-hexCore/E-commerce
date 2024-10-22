@@ -7,7 +7,7 @@
             'active' => request()->routeIs('admin.dashboard'),
         ],
         [
-            'header' => 'Administrar página'
+            'header' => 'Administrar página',
         ],
         [
             //Opciones
@@ -52,7 +52,7 @@
             'active' => request()->routeIs('admin.covers.*'),
         ],
         [
-            'header' => 'Ordenes y envios'
+            'header' => 'Ordenes y envios',
         ],
         [
             'name' => 'Conductores',
@@ -65,7 +65,14 @@
             'icon' => 'fa-solid fa-shopping-cart',
             'route' => route('admin.orders.index'),
             'active' => request()->routeIs('admin.orders.*'),
-        ]
+        ],
+        [
+            //Envios
+            'name' => 'Envios',
+            'icon' => 'fa-solid fa-shipping-fast',
+            'route' => route('admin.shipments.index'),
+            'active' => request()->routeIs('admin.shipments.*'),
+        ],
     ];
 @endphp
 

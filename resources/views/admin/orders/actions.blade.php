@@ -1,7 +1,7 @@
 <div class="flex flex-col space-y-2">
     @switch($order->status)
         @case(\App\Enums\OrderStatus::Pending)
-            <button wire:click="markAsProcessing({{$order->id}})" class="underline text-indigo-300 hover:no-underline">
+            <button wire:click="markAsProcessing({{ $order->id }})" class="text-indigo-300 hover:underline">
                 <a href="">
                     Listo para enviar
                 </a>
@@ -9,18 +9,20 @@
         @break
 
         @case(\App\Enums\OrderStatus::Processing)
-            <button class="underline text-indigo-300 hover:no-underline">
-                <a href="">
-                    Asignar repartidor
-                </a>
+            <button wire:click="assingDriver({{ $order->id }})" class="text-indigo-300 hover:underline">
+                Asignar repartidor
+            </button>
+        @break
+
+        @case(\App\Enums\OrderStatus::Failed)
+            <button wire:click="markAsRefunded({{ $order->id }})" class="text-indigo-300 hover:underline">
+                Marcar como devuelto
             </button>
         @break
 
         @default
     @endswitch
     <button class="underline text-red-300 hover:no-underline">
-        <a href="">
-            Cancelar
-        </a>
+        Cancelar
     </button>
 </div>

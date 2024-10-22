@@ -3,14 +3,30 @@
 namespace App\Livewire\Admin\Orders;
 
 use App\Enums\OrderStatus;
+use App\Models\Driver;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class OrderTable extends DataTableComponent
 {
     protected $model = Order::class;
+
+    public $drivers;
+
+    public $new_shipment = [
+        'openModal' => false,
+        'order_id' => '',
+        'driver_id' => '',
+    ];
+
+    public function mount()
+    {
+        $this->drivers = Driver::all();
+    }
 
     public function configure(): void
     {
@@ -49,6 +65,24 @@ class OrderTable extends DataTableComponent
         ];
     }
 
+    public function filters(): array
+    {
+        return [
+            SelectFilter::make('Status')
+                ->options([
+                    '' => 'Todos',
+                    2 => 'Procesando',
+                    3 => 'Enviado',
+                    4 => 'Completado',
+                    5 => 'Fallido',
+                    6 => 'Reembolsado',
+                    7 => 'Cancelado',
+                ])->filter(function ($query, $value) {
+                    $query->where('status', $value);
+                }),
+        ];
+    }
+
     public function downloadTicket(Order $order)
     {
         return Storage::download($order->pdf_path);
@@ -57,6 +91,39 @@ class OrderTable extends DataTableComponent
     public function markAsProcessing(Order $order)
     {
         $order->status = OrderStatus::Processing;
+        $order->save();
+    }
+
+    public function customView(): string
+    {
+        return 'admin.orders.modal';
+    }
+
+    public function assingDriver(Order $order)
+    {
+        $this->new_shipment['order_id'] = $order->id;
+        $this->new_shipment['openModal'] = true;
+    }
+
+    public function saveShipment()
+    {
+        $this->validate([
+            'new_shipment.driver_id' => 'required|exists:drivers,id',
+        ]);
+
+        $order = Order::find($this->new_shipment['order_id']);
+        $order->status = OrderStatus::Shipped;
+        $order->save();
+
+        $order->shipments()->create([
+            'driver_id' => $this->new_shipment['driver_id'],
+        ]);
+        $this->reset('new_shipment');
+    }
+
+    public function markAsRefunded(Order $order)
+    {
+        $order->status = OrderStatus::Refunded;
         $order->save();
     }
 }
