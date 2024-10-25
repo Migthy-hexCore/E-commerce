@@ -14,7 +14,6 @@ class Variant extends Model
     //asignacion masiva
     protected $fillable = [
         'sku',
-        'image_path',
         'stock',
         'product_id',
     ];

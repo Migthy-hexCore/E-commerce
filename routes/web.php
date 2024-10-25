@@ -23,8 +23,8 @@ Route::get('categories/{category}', [CategoryController::class, 'show'])->name('
 Route::get('subcategories/{subcategory}', [SubcategoryController::class, 'show'])->name('subcategories.show');
 Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-Route::get('shipping', [ShippingController::class, 'index'])->name('shipping.index');
-Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::get('shipping', [ShippingController::class, 'index'])->middleware('auth')->name('shipping.index');
+Route::get('checkout', [CheckoutController::class, 'index'])->middleware('auth')->name('checkout.index');
 Route::post('checkout/paid', [CheckoutController::class, 'paid'])->name('checkout.paid');
 
 
@@ -53,4 +53,4 @@ Route::get('prueba', function () {
 
     return "Ticket generado";
     return view('orders.ticket', compact('order'));
-}); 
+});
