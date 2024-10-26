@@ -15,12 +15,19 @@
             <div class="card">
                 <ul class="space-y-4">
                     @forelse (Cart::content() as $item)
-                        <li class="lg:flex">
+                        <li class="lg:flex ">
                             <img class="w-full lg:w-36 aspect-square object-cover object-center mr-2"
                                 src="{{ $item->options->image }}">
 
                             <div class="w-80">
-                                <p class="text-sm text-gray-300">
+
+                                @if ($item->qty > $item->options['stock'])
+                                    <p class="font-semibold text-gray-400 text-sm">
+                                        Sin stock
+                                    </p>
+                                @endif
+
+                                <p class="text-sm truncate text-gray-300 {{$item->qty > $item->options['stock'] ? 'text-red-400' : ''}}">
                                     <a href="{{ route('products.show', $item->id) }}">
                                         {{ $item->name }}
                                     </a>
@@ -34,7 +41,7 @@
 
                             </div>
 
-                            <p class="text-gray-300">
+                            <p class="text-gray-300 {{$item->qty > $item->options['stock'] ? 'text-red-400' : ''}}">
                                 {{ $item->price }} $MXN
                             </p>
 
@@ -45,7 +52,8 @@
 
                                 <span class="text-gray-300 inline-block w-2 text-center">{{ $item->qty }}</span>
 
-                                <button wire:click="increase('{{ $item->rowId }}')" class="btn btn-indigo">
+                                <button @disabled($item->qty >= $item->options['stock']) wire:click="increase('{{ $item->rowId }}')"
+                                    class="btn btn-indigo">
                                     +
                                 </button>
                             </div>
@@ -69,7 +77,7 @@
                         Total:
                     </p>
                     <p class="text-gray-300">
-                        {{ Cart::subtotal() }} $MXN
+                        {{ $this->subtotal }} $MXN
                     </p>
                 </div>
                 <a href="{{ route('shipping.index') }}" class="btn btn-indigo block w-full text-center">Continuar

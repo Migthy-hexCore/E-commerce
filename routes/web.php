@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Middleware\VerifyStock;
 use App\Models\Feature;
 use App\Models\Order;
 use App\Models\Product;
@@ -22,7 +23,7 @@ Route::get('families/{family}', [FamilyController::class, 'show'])->name('famili
 Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 Route::get('subcategories/{subcategory}', [SubcategoryController::class, 'show'])->name('subcategories.show');
 Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
-Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('cart', [CartController::class, 'index'])->name('cart.index')->middleware(VerifyStock::class);
 Route::get('shipping', [ShippingController::class, 'index'])->middleware('auth')->name('shipping.index');
 Route::get('checkout', [CheckoutController::class, 'index'])->middleware('auth')->name('checkout.index');
 Route::post('checkout/paid', [CheckoutController::class, 'paid'])->name('checkout.paid');
