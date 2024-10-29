@@ -4,12 +4,14 @@
         'route' => route('admin.dashboard'),
     ],
     [
-        'name' => 'Subcategorias',
-        'route' => route('admin.subcategories.index'),
+        'name' => 'Usuarios',
+        'route' => route('admin.users.index'),
     ],
     [
         'name' => 'Nuevo',
     ],
 ]">
-    @livewire('admin.subcategories.subcategory-create')
+
+    @livewire('admin.users.user-create')
+
 </x-admin-layout>
